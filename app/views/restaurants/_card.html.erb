@@ -1,0 +1,4 @@
+<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(http://source.unsplash.com/featured/?<%= restaurant.category.downcase %>&<%= rand(1000) %>)">
+  <%= restaurant.name %>
+  <%= link_to "", restaurant_path(restaurant), class: "card-link"  %>
+</div>
