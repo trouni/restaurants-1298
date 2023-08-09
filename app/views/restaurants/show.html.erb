@@ -20,6 +20,21 @@
         </p>
       </div>
       <p class="fw-lighter opacity-75 mt-2"><%= @restaurant.description  %></p>
+      <h3>Reviews</h3>
+      <ul>
+        <% if @restaurant.reviews.any? %>
+          <% @restaurant.reviews.each do |review| %>
+            <li>
+              <%= review.content %>
+              <small class='text-300'><%= review.created_at.strftime('%b %d, %Y') %></small>
+              <%= link_to 'x', review_path(review), data: { turbo_method: :delete, turbo_confirm: "Delete review for #{@restaurant.name}?"} %>
+            </li>
+          <% end %>
+        <% else %>
+          <li>No reviews yet.</li>
+        <% end %>
+        <%= link_to 'Leave Review', new_restaurant_review_path(@restaurant), class: 'btn btn-primary'  %>
+      </ul>
     </div>
     <div class="col-12 col-sm-4 mt-5">
       <%= render 'restaurants/side_info' %>
