@@ -13,6 +13,8 @@
   <body>
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
-    <%= yield %>
+    <div class="col-4 offset-4">
+      <%= yield %>
+    </div>
   </body>
 </html>
