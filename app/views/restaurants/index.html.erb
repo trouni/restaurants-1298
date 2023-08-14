@@ -1,15 +1,13 @@
-<div class="container mt-3">
-  <% if user_signed_in? %>
-    <%= current_user.email %>
-  <% end %>
-  <div class="d-flex justify-content-between align-items-center">
+<div class="container mt-3" data-controller="insert-in-list">
+  <div class="position-relative d-flex justify-content-between align-items-center" data-controller="toggle">
     <h1>Restaurants</h1>
-    <%= link_to new_restaurant_path, class: 'text-dark text-decoration-none' do %>
-      <i class="fa-solid fa-plus"></i>
-    <% end %>
+    <i class="fa-solid fa-plus" data-action='click->toggle#toggle'></i>
+    <div class="position-absolute top-0 end-0 shadow bg-white p-3 d-none" style="z-index: 100;" data-toggle-target="toggleElement" data-insert-in-list-target='formWrapper'>
+      <%= render 'restaurants/form', restaurant: Restaurant.new %>
+    </div>
   </div>
-  <div class="cards">
-    <% @restaurants.each do |restaurant| %>
+  <div class="cards" data-insert-in-list-target="items">
+    <% @restaurants.order(created_at: :desc).each do |restaurant| %>
       <%= render 'restaurants/card', restaurant: restaurant %>
     <% end %>
   </div>
