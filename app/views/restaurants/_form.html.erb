@@ -1,11 +1,6 @@
-<!-- <form action="/restaurants" method="post">
-  </form> -->
-<!-- form_with is expecting an instance -->
-<!-- form_with builds the path and method for us -->
 <%= simple_form_for restaurant do |f| %>
   <%= f.input :name %>
   <%= f.input :rating, input_html: { min: 0, max: 5 } %>
   <%= f.input :address %>
-  <%#= f.input :species, collection: Pet::SPECIES %>
   <%= f.submit class: 'btn btn-primary mt-2' %>
 <% end %>
