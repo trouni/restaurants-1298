@@ -11,10 +11,11 @@
       <div class="d-flex align-items-center">
         <h1 class="m-0"><%= @restaurant.name %></h1>
         <p class="m-0 ms-2" style="font-size: 0.8em">
-          <% @restaurant.rating.times do %>
+          <% rating = @restaurant.rating || rand(1..5) %>
+          <% rating.times do %>
             <i class="fas fa-star"></i>
           <% end %>
-          <% (5 - @restaurant.rating).times do %>
+          <% (5 - rating).times do %>
             <i class="far fa-star"></i>
           <% end %>
         </p>
