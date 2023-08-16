@@ -13,6 +13,15 @@ class RestaurantsController < ApplicationController
   def index
     @restaurant = Restaurant.new
     @restaurants = Restaurant.all
+
+    @markers = @restaurants.geocoded.map do |restaurant|
+      {
+        lat: restaurant.latitude,
+        lng: restaurant.longitude,
+        popup_html: render_to_string(partial: "restaurants/map_popup", locals: { restaurant: restaurant }),
+        marker_html: render_to_string(partial: "restaurants/map_marker", locals: { restaurant: restaurant })
+      }
+    end
   end
 
   def show
