@@ -9,12 +9,20 @@
 <p class="fw-lighter opacity-75">
   <i class="fas fa-utensils"></i><span class='ms-2'><%= @restaurant.category %></span>
 </p>
+<p class="fw-lighter opacity-75">
+  <i class="fas fa-user"></i><span class='ms-2'><%= image_tag "https://kitt.lewagon.com/placeholder/users/#{@restaurant.user.username}", class: "avatar", alt: "dropdown menu" %><%= @restaurant.user.username %></span>
+</p>
 <p><%#= link_to @restaurant.chef_name, chef_restaurant_path(@restaurant)  %></p>
 <div class="d-flex">
-  <%= link_to edit_restaurant_path(@restaurant), class: 'text-dark text-decoration-none' do %>
-    <i class="fas fa-pencil-alt mx-1"></i>
+  <%# if current_user == @restaurant.user %>
+  <% if policy(@restaurant).edit? %>
+    <%= link_to edit_restaurant_path(@restaurant), class: 'text-dark text-decoration-none' do %>
+      <i class="fas fa-pencil-alt mx-1"></i>
+    <% end %>
   <% end %>
-  <%= link_to restaurant_path(@restaurant), class: 'text-dark text-decoration-none', data: { turbo_method: :delete, turbo_confirm: "Do you want to delete #{@restaurant.name}" } do %>
-    <i class="fas fa-trash mx-1"></i>
+  <% if policy(@restaurant).destroy? %>
+    <%= link_to restaurant_path(@restaurant), class: 'text-dark text-decoration-none', data: { turbo_method: :delete, turbo_confirm: "Do you want to delete #{@restaurant.name}" } do %>
+      <i class="fas fa-trash mx-1"></i>
+    <% end %>
   <% end %>
 </div>

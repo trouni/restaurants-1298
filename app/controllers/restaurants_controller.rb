@@ -12,22 +12,27 @@ class RestaurantsController < ApplicationController
 
   def index
     @restaurant = Restaurant.new
-    @restaurants = Restaurant.all
+    @restaurants = policy_scope(Restaurant)
   end
 
   def show
     # params is pulling the ID from the url
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant # this `#authorize` method checks if the user is allowed to view the @restaurant
   end
 
   def new
     # This is for the form
     @restaurant = Restaurant.new
+    authorize @restaurant
   end
 
   # this does not have a view
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user = current_user
+
+    authorize @restaurant
     if @restaurant.save
       respond_to do |format|
         format.html { redirect_to restaurants_path }
@@ -49,11 +54,17 @@ class RestaurantsController < ApplicationController
   def edit
     # This is for the form
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant # @restaurant will be accessible as `record` in the policy
+    
+    # Without Pundit (for demo only):
+    # raise 'AuthorizationError' unless @restaurant.user == current_user
   end
 
   # this does not have a view
   def update
     @restaurant = Restaurant.find(params[:id])
+    
+    authorize @restaurant # We want to make sure we check before we update
     if @restaurant.update(restaurant_params)
       redirect_to restaurant_path(@restaurant)
     else
@@ -64,6 +75,7 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant
     @restaurant.destroy
     redirect_to restaurants_path, status: :see_other
   end
